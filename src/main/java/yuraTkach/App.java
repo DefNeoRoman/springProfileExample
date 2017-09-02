@@ -17,15 +17,20 @@ public class App {
         this.eventLogger = eventLogger;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
         App app = (App) context.getBean("app");
-        app.logEvent("Some message for 1");
-        app.logEvent("Some message for 2");
+        Event event1 = (Event)context.getBean("event");
+        Thread.sleep(1000);
+        Event event2 = (Event)context.getBean("event");
+
+        app.logEvent("Some message for 1",event1);
+        app.logEvent("Some message for 2",event2);
     }
-    private void logEvent(String msg) {
+    private void logEvent(String msg, Event event) {
         String message = msg.replaceAll(client.getId(), client.getFullName());
-        eventLogger.logEvent(message);
+        event.setMsg(message);
+        eventLogger.logEvent(event);
 
 
     }

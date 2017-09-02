@@ -1,0 +1,11 @@
+package yuraTkach.loggers;
+
+import yuraTkach.Event;
+import yuraTkach.loggers.EventLogger;
+
+public class ConsoleEventLogger implements EventLogger{
+
+    public void logEvent(Event event) {
+        System.out.println(event);
+    }
+}

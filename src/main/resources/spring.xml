@@ -10,10 +10,24 @@
         <constructor-arg index="1" value="John Smith" type="java.lang.String"/>
     </bean>
 
-    <bean id="eventLogger" class="yuraTkach.ConsoleEventLogger" />
+    <bean id="eventLogger" class="yuraTkach.loggers.ConsoleEventLogger" />
 
     <bean id="app" class="yuraTkach.App">
         <constructor-arg ref="client" />
         <constructor-arg ref="eventLogger" />
+    </bean>
+    <bean id="event" class="yuraTkach.Event" scope="prototype">
+
+        <constructor-arg>
+            <bean class="java.util.Date">
+
+            </bean>
+        </constructor-arg>
+        <constructor-arg>
+            <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance">
+
+            </bean>
+        </constructor-arg>
+
     </bean>
 </beans>

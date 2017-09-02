@@ -1,5 +1,7 @@
 package yuraTkach.loggers;
 
+import yuraTkach.Event;
+
 public interface EventLogger {
-    public void logEvent(String mesage);
+    public void logEvent(Event event);
 }
