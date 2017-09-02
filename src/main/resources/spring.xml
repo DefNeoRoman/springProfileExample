@@ -4,17 +4,15 @@
        xsi:schemaLocation="
  		http://www.springframework.org/schema/beans
  		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
-
+    <import resource="loggers.xml"/>
     <bean id="client" class="yuraTkach.Client">
         <constructor-arg index="0" value = "1"/>
         <constructor-arg index="1" value="John Smith" type="java.lang.String"/>
     </bean>
 
-    <bean id="eventLogger" class="yuraTkach.loggers.ConsoleEventLogger" />
-
     <bean id="app" class="yuraTkach.App">
         <constructor-arg ref="client" />
-        <constructor-arg ref="eventLogger" />
+        <constructor-arg ref="fileEventLogger" />
     </bean>
     <bean id="event" class="yuraTkach.Event" scope="prototype">
 
