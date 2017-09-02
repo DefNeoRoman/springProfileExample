@@ -18,7 +18,7 @@ public class FileEventLogger implements EventLogger{
 
     public void logEvent(yuraTkach.Event event) {
         try {
-            FileUtils.writeStringToFile(file,event.toString(), Charset.forName("UTF-8"));
+            FileUtils.writeStringToFile(file,event.toString()+"\n", Charset.forName("UTF-8"),true);
         } catch (IOException e) {
             e.printStackTrace();
         }

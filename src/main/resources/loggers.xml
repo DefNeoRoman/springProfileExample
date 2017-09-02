@@ -15,6 +15,10 @@
           init-method="init">
         <constructor-arg value="target/events_log.txt" />
     </bean>
+    <bean id="cacheFileEventLogger" class="yuraTkach.loggers.CacheFileEventLogger"
+          destroy-method="destroy" parent="fileEventLogger">
+        <constructor-arg index="1" value="5" />
+    </bean>
 
 
 

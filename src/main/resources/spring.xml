@@ -12,7 +12,7 @@
 
     <bean id="app" class="yuraTkach.App">
         <constructor-arg ref="client" />
-        <constructor-arg ref="fileEventLogger" />
+        <constructor-arg ref="cacheFileEventLogger" />
     </bean>
     <bean id="event" class="yuraTkach.Event" scope="prototype">
 
