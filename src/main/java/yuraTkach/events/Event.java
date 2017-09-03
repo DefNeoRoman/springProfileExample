@@ -10,6 +10,11 @@ public class Event {
     private String msg;
     private Date date;
     private DateFormat dateFormat;
+    public Event(int id, Date date, String msg) {
+        this.id = id;
+        this.date = date;
+        this.msg = msg;
+    }
     public Event(int id, String msg, Date date) {
         this.id = AUTO_ID.incrementAndGet();
         this.msg = msg;
@@ -49,6 +54,9 @@ public class Event {
 
     public void setDateFormat(DateFormat dateFormat) {
         this.dateFormat = dateFormat;
+    }
+    public static void initAutoId(int id) {
+        AUTO_ID.set(id);
     }
     @Override
     public String toString() {

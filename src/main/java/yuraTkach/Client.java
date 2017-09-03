@@ -1,5 +1,8 @@
 package yuraTkach;
 
+import org.springframework.stereotype.Component;
+
+
 public class Client {
     private String id;
     private String fullName;

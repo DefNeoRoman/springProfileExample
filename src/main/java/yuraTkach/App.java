@@ -1,5 +1,6 @@
 package yuraTkach;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -10,8 +11,9 @@ import yuraTkach.loggers.EventLogger;
 import java.util.Map;
 
 public class App {
-    private Client client;
 
+    private Client client;
+    private String startupMessage;
     private EventLogger eventLogger;
     private Map<EventType, EventLogger> loggers;
     public App() {
@@ -28,12 +30,19 @@ public class App {
         this.loggers = loggers;
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
-        App app = (App) context.getBean("app");
+    public static void main(String[] args) {
+        ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(
+                "spring.xml");
+        App app = (App) ctx.getBean("app");
 
-        app.logEvents(context);
-        context.close();
+        System.out.println(app.startupMessage);
+
+        Client client = ctx.getBean(Client.class);
+        System.out.println("Client says: " + client.getGreeting());
+
+        app.logEvents(ctx);
+
+        ctx.close();
     }
     public void logEvents(ApplicationContext ctx) {
         Event event = ctx.getBean(Event.class);
@@ -43,7 +52,7 @@ public class App {
         logEvent(EventType.INFO, event, "One more event for 1");
 
         event = ctx.getBean(Event.class);
-        logEvent(EventType.INFO, event, "And one more event for 1");
+        logEvent(EventType.ERROR, event, "And one more event for 1");
 
         event = ctx.getBean(Event.class);
         logEvent(EventType.ERROR, event, "Some event for 2");
@@ -61,6 +70,9 @@ public class App {
         }
 
         logger.logEvent(event);
+    }
+    public void setStartupMessage(String startupMessage) {
+        this.startupMessage = startupMessage;
     }
 
 }
