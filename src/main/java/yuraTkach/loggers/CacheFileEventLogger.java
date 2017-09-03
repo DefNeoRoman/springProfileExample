@@ -1,6 +1,6 @@
 package yuraTkach.loggers;
 
-import yuraTkach.Event;
+import yuraTkach.events.Event;
 
 import java.util.ArrayList;
 import java.util.List;

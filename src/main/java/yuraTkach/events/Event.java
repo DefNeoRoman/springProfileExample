@@ -1,4 +1,4 @@
-package yuraTkach;
+package yuraTkach.events;
 
 import java.text.DateFormat;
 import java.util.Date;

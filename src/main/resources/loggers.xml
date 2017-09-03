@@ -17,7 +17,17 @@
     </bean>
     <bean id="cacheFileEventLogger" class="yuraTkach.loggers.CacheFileEventLogger"
           destroy-method="destroy" parent="fileEventLogger">
+        <!--parent для того, чтобы знать откуда первый аргумент, и инит-метод-->
+
         <constructor-arg index="1" value="5" />
+    </bean>
+    <util:list id="combinedLoggersList">
+        <ref bean="consoleEventLogger" />
+        <ref bean="fileEventLogger" />
+
+    </util:list>
+    <bean id="combinedEventLogger" class="yuraTkach.loggers.CombinedEventLogger">
+        <constructor-arg ref="combinedLoggersList"/>
     </bean>
 
 

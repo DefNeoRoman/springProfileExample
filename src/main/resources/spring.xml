@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="
- 		http://www.springframework.org/schema/beans
- 		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+ 		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
     <import resource="loggers.xml"/>
     <bean id="client" class="yuraTkach.Client">
         <constructor-arg index="0" value = "1"/>
         <constructor-arg index="1" value="John Smith" type="java.lang.String"/>
+        <property name="greeting" value="hello there"/>
     </bean>
-
+    <util:map id="loggerMap">
+        <entry key="INFO" value-ref="consoleEventLogger" />
+        <entry key="ERROR" value-ref="combinedEventLogger" />
+    </util:map>
     <bean id="app" class="yuraTkach.App">
         <constructor-arg ref="client" />
         <constructor-arg ref="cacheFileEventLogger" />
-    </bean>
-    <bean id="event" class="yuraTkach.Event" scope="prototype">
+        <constructor-arg ref="loggerMap" />
 
+    </bean>
+    <bean id="event" class="yuraTkach.events.Event" scope="prototype">
+        <!--Здесь scope prototype, но по умолчанию у всех бинов scope = "singletone"-->
+        <!--но есть еще request, session, global-session-->
         <constructor-arg>
             <bean class="java.util.Date">
 

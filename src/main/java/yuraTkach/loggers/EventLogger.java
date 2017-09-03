@@ -1,6 +1,6 @@
 package yuraTkach.loggers;
 
-import yuraTkach.Event;
+import yuraTkach.events.Event;
 
 public interface EventLogger {
     public void logEvent(Event event);

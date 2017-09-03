@@ -1,7 +1,6 @@
 package yuraTkach.loggers;
 
 import org.apache.commons.io.FileUtils;
-import org.w3c.dom.events.Event;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +15,7 @@ public class FileEventLogger implements EventLogger{
         file = new File(fileName);
     }
 
-    public void logEvent(yuraTkach.Event event) {
+    public void logEvent(yuraTkach.events.Event event) {
         try {
             FileUtils.writeStringToFile(file,event.toString()+"\n", Charset.forName("UTF-8"),true);
         } catch (IOException e) {

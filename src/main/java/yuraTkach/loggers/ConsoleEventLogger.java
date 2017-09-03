@@ -1,7 +1,6 @@
 package yuraTkach.loggers;
 
-import yuraTkach.Event;
-import yuraTkach.loggers.EventLogger;
+import yuraTkach.events.Event;
 
 public class ConsoleEventLogger implements EventLogger{
 

@@ -3,13 +3,17 @@ package yuraTkach;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import yuraTkach.events.Event;
+import yuraTkach.events.EventType;
 import yuraTkach.loggers.EventLogger;
+
+import java.util.Map;
 
 public class App {
     private Client client;
 
     private EventLogger eventLogger;
-
+    private Map<EventType, EventLogger> loggers;
     public App() {
     }
 
@@ -18,34 +22,45 @@ public class App {
         this.eventLogger = eventLogger;
     }
 
+    public App(Client client, EventLogger eventLogger, Map<EventType, EventLogger> loggers) {
+        this.client = client;
+        this.eventLogger = eventLogger;
+        this.loggers = loggers;
+    }
+
     public static void main(String[] args) throws InterruptedException {
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
         App app = (App) context.getBean("app");
-        Event event1 = (Event)context.getBean("event");
-        Thread.sleep(1000);
-        Event event2 = (Event)context.getBean("event");
-        Thread.sleep(1000);
-        Event event3 = (Event)context.getBean("event");
-        Thread.sleep(1000);
-        Event event4 = (Event)context.getBean("event");
-        Thread.sleep(1000);
-        Event event5 = (Event)context.getBean("event");
-        Thread.sleep(1000);
-        Event event6 = (Event)context.getBean("event");
-        app.logEvent("Some message for 1",event1);
-        app.logEvent("Some message for 2",event2);
-        app.logEvent("Some message for 2",event3);
-        app.logEvent("Some message for 2",event4);
-        app.logEvent("Some message for 2",event5);
-        app.logEvent("Some message for 2",event6);
+
+        app.logEvents(context);
         context.close();
     }
-    private void logEvent(String msg, Event event) {
+    public void logEvents(ApplicationContext ctx) {
+        Event event = ctx.getBean(Event.class);
+        logEvent(EventType.INFO, event, "Some event for 1");
+
+        event = ctx.getBean(Event.class);
+        logEvent(EventType.INFO, event, "One more event for 1");
+
+        event = ctx.getBean(Event.class);
+        logEvent(EventType.INFO, event, "And one more event for 1");
+
+        event = ctx.getBean(Event.class);
+        logEvent(EventType.ERROR, event, "Some event for 2");
+
+        event = ctx.getBean(Event.class);
+        logEvent(null, event, "Some event for 3");
+    }
+    private void logEvent(EventType eventType, Event event, String msg) {
         String message = msg.replaceAll(client.getId(), client.getFullName());
         event.setMsg(message);
-        eventLogger.logEvent(event);
 
+        EventLogger logger = loggers.get(eventType);
+        if (logger == null) {
+            logger = eventLogger;
+        }
 
+        logger.logEvent(event);
     }
 
 }
