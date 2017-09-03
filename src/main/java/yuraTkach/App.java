@@ -29,11 +29,8 @@ public class App {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
-        App app = (App) context.getBean("app");
 
-        app.logEvents(context);
-        context.close();
+
     }
     public void logEvents(ApplicationContext ctx) {
         Event event = ctx.getBean(Event.class);

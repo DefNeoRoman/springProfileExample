@@ -1,49 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
- 		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
-    <import resource="loggers.xml"/>
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:client.properties</value>
-            </list>
-        </property>
-        <property name="ignoreResourceNotFound" value="true" />
-        <property name="systemPropertiesMode">
-            <util:constant
-                    static-field="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-        </property>
-    </bean>
-    <bean id="client" class="yuraTkach.Client">
-        <constructor-arg index="0" value = "${id}"/>
-        <constructor-arg index="1" value="${name}" type="java.lang.String"/>
-        <property name="greeting" value="${greeting}"/>
-    </bean>
-    <util:map id="loggerMap">
-        <entry key="INFO" value-ref="consoleEventLogger" />
-        <entry key="ERROR" value-ref="combinedEventLogger" />
-    </util:map>
-    <bean id="app" class="yuraTkach.App">
-        <constructor-arg ref="client" />
-        <constructor-arg ref="cacheFileEventLogger" />
-        <constructor-arg ref="loggerMap" />
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
-    </bean>
-    <bean id="event" class="yuraTkach.events.Event" scope="prototype">
-        <!--Здесь scope prototype, но по умолчанию у всех бинов scope = "singletone"-->
-        <!--но есть еще request, session, global-session-->
-        <constructor-arg>
-            <bean class="java.util.Date">
+       xmlns:context="http://www.springframework.org/schema/context"
 
-            </bean>
-        </constructor-arg>
-        <constructor-arg>
-            <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance">
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 
-            </bean>
-        </constructor-arg>
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-util-3.2.xsd">
 
-    </bean>
+
+    <context:annotation-config/>
+
 </beans>
